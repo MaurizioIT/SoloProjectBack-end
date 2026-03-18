@@ -1,15 +1,15 @@
 ﻿using Dapper;
 using MySecureBackend.WebApi.Models;
 using MySecureBackend.WebApi.Repositories;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 
 public class Object2DRepository : IObject2DRepository
 {
     private readonly string _connectionString;
 
-    public Object2DRepository(IConfiguration config)
+    public Object2DRepository(string sqlConnectionString)
     {
-        _connectionString = config.GetConnectionString("DefaultConnection");
+        _connectionString = sqlConnectionString;
     }
 
     public async Task<IEnumerable<Object2D>> GetByEnvironmentAsync(int environmentId)
