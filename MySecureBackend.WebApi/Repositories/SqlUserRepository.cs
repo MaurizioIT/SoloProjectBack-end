@@ -18,7 +18,7 @@ namespace MySecureBackend.WebApi.Repositories
             using (var sqlConnection = new SqlConnection(sqlConnectionString))
             {
                 var id = await sqlConnection.ExecuteScalarAsync<int>(
-                    "INSERT INTO users (Name, Password ) OUTPUT INSERTED.ID VALUES (@Name, @Password )",
+                    "INSERT INTO Users (Name, Password ) OUTPUT INSERTED.ID VALUES (@Name, @Password )",
                     user);
                 user.UserID = id;
                 return user;
@@ -29,7 +29,7 @@ namespace MySecureBackend.WebApi.Repositories
         {
             using (var sqlConnection = new SqlConnection(sqlConnectionString))
             {
-                return await sqlConnection.QuerySingleOrDefaultAsync<User>("SELECT * FROM users WHERE Id = @Id", new { id });
+                return await sqlConnection.QuerySingleOrDefaultAsync<User>("SELECT * FROM Users WHERE Id = @Id", new { id });
             }
         }
 
@@ -37,7 +37,7 @@ namespace MySecureBackend.WebApi.Repositories
         {
             using (var sqlConnection = new SqlConnection(sqlConnectionString))
             {
-                return await sqlConnection.QueryAsync<User>("SELECT * FROM users");
+                return await sqlConnection.QueryAsync<User>("SELECT * FROM Users");
             }
         }
 
@@ -45,7 +45,7 @@ namespace MySecureBackend.WebApi.Repositories
         {
             using (var sqlConnection = new SqlConnection(sqlConnectionString))
             {
-                await sqlConnection.ExecuteAsync("UPDATE users SET " +
+                await sqlConnection.ExecuteAsync("UPDATE Users SET " +
                                                  "Name = @Name, " +
                                                  "Password = @Password " +
                                                  "WHERE Id = @Id", user);
