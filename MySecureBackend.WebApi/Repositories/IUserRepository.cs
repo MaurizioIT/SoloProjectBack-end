@@ -9,5 +9,6 @@ namespace MySecureBackend.WebApi.Repositories
         Task<IEnumerable<User>> SelectAsync();
         Task<User?> SelectAsync(int id);
         Task UpdateAsync(User user);
+        Task<bool> VerifyCredentialsAsync(string username, string password);
     }
 }

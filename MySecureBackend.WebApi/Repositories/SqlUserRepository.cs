@@ -60,5 +60,16 @@ namespace MySecureBackend.WebApi.Repositories
                 await sqlConnection.ExecuteAsync("DELETE FROM users WHERE Id = @Id", new { id });
             }
         }
+
+        public async Task<bool> VerifyCredentialsAsync(string username, string password)
+        {
+            using (var sqlConnection = new SqlConnection(sqlConnectionString))
+            {
+                var result = await sqlConnection.QuerySingleOrDefaultAsync<int>(
+                    "SELECT COUNT(*) FROM Users WHERE Name = @username COLLATE SQL_Latin1_General_CP1_CS_AS AND Password = @password",
+                    new { username, password });
+                return result > 0;
+            }
+        }
     }
 }

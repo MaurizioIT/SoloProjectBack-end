@@ -28,17 +28,10 @@ namespace MySecureBackend.WebApi.Controllers
             if (loginRequest == null || string.IsNullOrWhiteSpace(loginRequest.username) || string.IsNullOrWhiteSpace(loginRequest.password))
                 return BadRequest(new ProblemDetails { Detail = "Username and password are required" });
 
-            // Get all users and find matching username
-            var users = await _userRepository.SelectAsync();
-            var user = users.FirstOrDefault(u => u.Username == loginRequest.username);
+            // Verify credentials directly from database
+            bool isValid = await _userRepository.VerifyCredentialsAsync(loginRequest.username, loginRequest.password);
 
-            if (user == null)
-                return Ok(false); // User not found
-
-            // Verify password (in production, use proper hashing verification)
-            bool isPasswordValid = user.Password == loginRequest.password;
-
-            return Ok(isPasswordValid);
+            return Ok(isValid);
         }
     }
 }
