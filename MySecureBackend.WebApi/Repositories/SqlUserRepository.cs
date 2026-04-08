@@ -18,7 +18,7 @@ namespace MySecureBackend.WebApi.Repositories
             using (var sqlConnection = new SqlConnection(sqlConnectionString))
             {
                 var id = await sqlConnection.ExecuteScalarAsync<int>(
-                    "INSERT INTO Users (Name, Password ) OUTPUT INSERTED.ID VALUES (@Name, @Password )",
+                    "INSERT INTO Users (Name, Password) OUTPUT INSERTED.ID VALUES (@Username, @Password)",
                     user);
                 user.UserID = id;
                 return user;
@@ -46,9 +46,9 @@ namespace MySecureBackend.WebApi.Repositories
             using (var sqlConnection = new SqlConnection(sqlConnectionString))
             {
                 await sqlConnection.ExecuteAsync("UPDATE Users SET " +
-                                                 "Name = @Name, " +
+                                                 "Name = @Username, " +
                                                  "Password = @Password " +
-                                                 "WHERE Id = @Id", user);
+                                                 "WHERE Id = @UserID", user);
 
             }
         }
