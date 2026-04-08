@@ -6,7 +6,7 @@ namespace MySecureBackend.WebApi.Models
     public class User
     {
         public int UserID { get; set; }
-        public string Username { get; set; } = string.Empty;
-        public string PasswordHash { get; set; } = string.Empty;
+        public string Username { get; set; }
+        public string Password { get; set; }
     }
 }

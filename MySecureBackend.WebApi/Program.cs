@@ -48,7 +48,7 @@ builder.Services.AddTransient<IAuthenticationService, AspNetIdentityAuthenticati
 
 // Register application repositories.
 // By default, use an in-memory repository for example objects.
-//builder.Services.AddTransient<IUserRepository, SqlUserRepository>(o => new SqlUserRepository(sqlConnectionString!));
+builder.Services.AddTransient<IUserRepository, SqlUserRepository>(o => new SqlUserRepository(sqlConnectionString!));
 builder.Services.AddTransient<IEnvironment2DRepository, Environment2DRepository>(o => new Environment2DRepository(sqlConnectionString!));
 builder.Services.AddTransient<IObject2DRepository, Object2DRepository>(o => new Object2DRepository(sqlConnectionString!));
 builder.Services.ConfigureApplicationCookie(options =>
@@ -58,7 +58,6 @@ builder.Services.ConfigureApplicationCookie(options =>
 });
 
 // To use a SQL-backed repository instead, uncomment the following line:
-//builder.Services.AddTransient<IExampleObjectRepository, SqlExampleObjectRepository>(o => new SqlExampleObjectRepository(sqlConnectionString!));
 
 var app = builder.Build();
 
