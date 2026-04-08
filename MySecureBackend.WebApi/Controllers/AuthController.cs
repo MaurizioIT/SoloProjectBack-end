@@ -25,18 +25,18 @@ namespace MySecureBackend.WebApi.Controllers
         [HttpPost("login", Name = "VerifyLogin")]
         public async Task<ActionResult<bool>> Login([FromBody] Login loginRequest)
         {
-            if (loginRequest == null || string.IsNullOrWhiteSpace(loginRequest.Username) || string.IsNullOrWhiteSpace(loginRequest.Password))
+            if (loginRequest == null || string.IsNullOrWhiteSpace(loginRequest.username) || string.IsNullOrWhiteSpace(loginRequest.password))
                 return BadRequest(new ProblemDetails { Detail = "Username and password are required" });
 
             // Get all users and find matching username
             var users = await _userRepository.SelectAsync();
-            var user = users.FirstOrDefault(u => u.Username == loginRequest.Username);
+            var user = users.FirstOrDefault(u => u.Username == loginRequest.username);
 
             if (user == null)
                 return Ok(false); // User not found
 
             // Verify password (in production, use proper hashing verification)
-            bool isPasswordValid = user.Password == loginRequest.Password;
+            bool isPasswordValid = user.Password == loginRequest.password;
 
             return Ok(isPasswordValid);
         }
